@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Coin from "../Components/Coin";
 import Refresh from "../Images/refresh.png";
 
-function Home() {
+function Home({ placeholder, altag }) {
   const [coins, setCoins] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +18,7 @@ function Home() {
   );
 
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
+    setSearchTerm(e.target.value.toLowerCase());
   };
 
   const refreshPage = () => {
@@ -47,14 +47,14 @@ function Home() {
   return (
     <div className="App">
       <div className="headerContainer">
-        <h1>Welcome to the CryptoChecker</h1>
+        <h1>Welcome to the Crypto Price Tracker</h1>
         <div className="buttonContainer">
           <input
-            placeholder="Search for a Coin"
+            placeholder={placeholder.toLowerCase()}
             type="text"
             onChange={handleSearch}
           />
-          <img onClick={refreshPage} src={Refresh}></img>
+          <img onClick={refreshPage} alt={altag} src={Refresh}></img>
         </div>
       </div>
       <div className="coinContainer">
@@ -62,7 +62,7 @@ function Home() {
         {filterCoins.map((coins) => {
           return (
             <Coin
-              id={coins.id}
+              key={coins.id}
               icon={coins.image}
               coinName={coins.name}
               coinSymbol={coins.symbol}
